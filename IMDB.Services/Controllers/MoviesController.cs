@@ -36,12 +36,12 @@ namespace IMDB.Services.Controllers
 
         [HttpPut]
         public string ModifyMovieDetails(int movieId, string movieName, string imageSource,
-            DateTime dateOfRelease, string plot, string producerName)
+            DateTime dateOfRelease, string plot, string producerName, params string[] actors)
         {
             string result ="";
             try
             {
-                var status = repository.UpdateMovieInfo(movieId, movieName, imageSource, dateOfRelease, plot, producerName);
+                var status = repository.UpdateMovieInfo(movieId, movieName, imageSource, dateOfRelease, plot, producerName, actors);
                 if (status)
                 {
                     result = "Movie details modified successfully!";
@@ -61,12 +61,12 @@ namespace IMDB.Services.Controllers
 
         [HttpPost]
         public string AddMovieDetails(string movieName, string imageSource,
-            DateTime dateOfRelease, string plot, string producerName)
+            DateTime dateOfRelease, string plot, string producerName, params string[] actors)
         {
             string result = "";
             try
             {
-                var status = repository.AddMovie(movieName, imageSource, dateOfRelease, plot, producerName);
+                var status = repository.AddMovie(movieName, imageSource, dateOfRelease, plot, producerName, actors);
                 if (status)
                 {
                     result = "Movie details added successfully!";

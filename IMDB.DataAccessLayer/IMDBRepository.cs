@@ -58,7 +58,7 @@ namespace IMDB.DataAccessLayer
         }
 
         public bool UpdateMovieInfo(int movieId, string movieName, string imageSource, 
-            DateTime dateOfRelease, string plot, string producerName)
+            DateTime dateOfRelease, string plot, string producerName, params string[] actors)
         {
             bool status = false;
             int producerId;
@@ -82,6 +82,31 @@ namespace IMDB.DataAccessLayer
 
                     imdbContextObj.Update<Movies>(movie);
                     imdbContextObj.SaveChanges();
+
+                    foreach (var item in actors)
+                    {
+                        int actorId = imdbContextObj.Actors
+                                            .Where(a => a.ActorName == item)
+                                            .Select(v => v.ActorId)
+                                            .FirstOrDefault();
+                        var actorsMoviesList = imdbContextObj.MoviesActors.Where(ma => ma.MovieId == movieId).ToList();
+                        foreach (var a in actorsMoviesList)
+                        {
+                            if (a.ActorId == actorId)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                MoviesActors actorMovie = new MoviesActors();
+                                actorMovie.MovieId = movieId;
+                                actorMovie.ActorId = actorId;
+
+                                imdbContextObj.Add<MoviesActors>(actorMovie);
+                                imdbContextObj.SaveChanges();
+                            }
+                        }
+                    }
                     status = true;
                 }
                 else
@@ -98,7 +123,7 @@ namespace IMDB.DataAccessLayer
         }
 
         public bool AddMovie(string movieName, string imageSource,
-            DateTime dateOfRelease, string plot, string producerName)
+            DateTime dateOfRelease, string plot, string producerName, params string[] actors)
         {
             bool status = false;
             int producerId;
@@ -119,6 +144,24 @@ namespace IMDB.DataAccessLayer
 
                     imdbContextObj.Add<Movies>(movie);
                     imdbContextObj.SaveChanges();
+
+                    int movieId = movie.MovieId;
+
+                    foreach (var item in actors)
+                    {
+                        int actorId = imdbContextObj.Actors
+                                            .Where(a => a.ActorName == item)
+                                            .Select(v=>v.ActorId)
+                                            .FirstOrDefault();
+                        
+                        MoviesActors actorMovie = new MoviesActors();
+                        actorMovie.MovieId = movieId;
+                        actorMovie.ActorId = actorId;
+
+                        imdbContextObj.Add<MoviesActors>(actorMovie);
+                        imdbContextObj.SaveChanges();
+                        }
+                    
                     status = true;
                 }
                 else
