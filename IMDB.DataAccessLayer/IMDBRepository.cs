@@ -83,29 +83,23 @@ namespace IMDB.DataAccessLayer
                     imdbContextObj.Update<Movies>(movie);
                     imdbContextObj.SaveChanges();
 
+                    var actorsMoviesList = imdbContextObj.MoviesActors.Where(ma => ma.MovieId == movieId).ToList();
+                    imdbContextObj.MoviesActors.RemoveRange(actorsMoviesList);
+                    imdbContextObj.SaveChanges();
+
                     foreach (var item in actors)
                     {
                         int actorId = imdbContextObj.Actors
                                             .Where(a => a.ActorName == item)
                                             .Select(v => v.ActorId)
                                             .FirstOrDefault();
-                        var actorsMoviesList = imdbContextObj.MoviesActors.Where(ma => ma.MovieId == movieId).ToList();
-                        foreach (var a in actorsMoviesList)
-                        {
-                            if (a.ActorId == actorId)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                MoviesActors actorMovie = new MoviesActors();
-                                actorMovie.MovieId = movieId;
-                                actorMovie.ActorId = actorId;
+                        
+                        MoviesActors actorMovie = new MoviesActors();
+                        actorMovie.MovieId = movieId;
+                        actorMovie.ActorId = actorId;
 
-                                imdbContextObj.Add<MoviesActors>(actorMovie);
-                                imdbContextObj.SaveChanges();
-                            }
-                        }
+                        imdbContextObj.Add<MoviesActors>(actorMovie);
+                        imdbContextObj.SaveChanges();
                     }
                     status = true;
                 }
