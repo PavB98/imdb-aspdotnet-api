@@ -96,3 +96,21 @@ select * from Producers
 select * from Movies
 select * from MoviesActors
 
+
+
+
+
+![AddActor](https://user-images.githubusercontent.com/109970604/182088373-d6084db2-147d-4cc7-8224-215efbb98ab9.png)
+![addMovie](https://user-images.githubusercontent.com/109970604/182088375-0076f400-7a10-4d62-8a9d-acd9742891d2.png)
+![AddProducer](https://user-images.githubusercontent.com/109970604/182088376-d34e4b2e-e343-4ba6-81ee-de7431755921.png)
+![AllActors](https://user-images.githubusercontent.com/109970604/182088380-b9df20bc-e987-447a-b05a-bfd41d6ea0a5.png)
+![AllMovies](https://user-images.githubusercontent.com/109970604/182088384-cac253e8-48a9-49f5-9bef-7c027d02a956.png)
+![AllProducers](https://user-images.githubusercontent.com/109970604/182088388-b8be6d82-36c4-4374-b07b-7b0c4d5270de.png)
+![ModifyMovieDetails](https://user-images.githubusercontent.com/109970604/182088442-854d29e5-d0b4-4582-b710-93942107f81d.png)
+
+
+
+
+
+
+
